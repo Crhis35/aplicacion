@@ -1,0 +1,74 @@
+{% extends 'marco.html' %}
+
+{% block body%}
+
+<div class="row">
+    <div class="col-md-5">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        <div class="card card-body">
+            <form action="/Anadir_un_contacto" method='POST'>
+                <div class="form group">
+                        <input type="text" name ="nombrecompleto" placeholder="Nombrecompleto" class="form-control">
+                </div> 
+                <div class="form group">
+                        <input type="text" name="phone" placeholder="Telefono" class="form-control">
+                </div>
+                <div class="form group">
+                        <input type="text" name="ciudad" placeholder="Ciudad" class="form-control">
+                </div>
+                <div class="form group">
+                        <input type="text" name="email" placeholder="Email" class="form-control">
+                </div>
+                <div class="form group">
+                        <button type="submit" class="btn btn-primary btn-block">
+                                Guardar
+                        </button>
+                </div>                   
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-dark table-sm">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Nombre completo</td>
+                    <td>Telefono</td>
+                    <td>Ciudad</td>
+                    <td>Email</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contactos in contacto %}
+                    <tr>
+                        <td>{{ contactos.0 }}</td>
+                        <td>{{ contactos.1 }}</td>
+                        <td>{{ contactos.2 }}</td>
+                        <td>{{ contactos.3 }}</td>
+                        <td>{{ contactos.4 }}</td>
+                        <td>
+                            <a href="/editar/{{contactos.0}}" class="btn btn-secondary">Editar</a>
+                            <a href="/eliminar/{{contactos.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock %}
